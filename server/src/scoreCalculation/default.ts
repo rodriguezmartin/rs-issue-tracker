@@ -34,7 +34,7 @@ export default function calculateScore(issue: GHIssue) {
     return accum
   }, 0)
 
-  const daysOpen = dayjs().diff(issue.created_at, 'days')
+  const daysOpen = dayjs(issue.created_at).businessDaysDiff(dayjs())
 
   return weight * daysOpen
 }

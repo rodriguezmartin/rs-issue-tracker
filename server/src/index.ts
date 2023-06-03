@@ -5,6 +5,11 @@ import 'dotenv/config'
 import memberRoutes from './entities/members/routes'
 import issueRoutes from './entities/issues/routes'
 
+import dayjs from 'dayjs'
+import dayjsBusinessTime from 'dayjs-business-time'
+
+dayjs.extend(dayjsBusinessTime);
+
 const app: Express = express()
 
 if (!process.env.ORGANIZATION || !process.env.REPOSITORY) {
