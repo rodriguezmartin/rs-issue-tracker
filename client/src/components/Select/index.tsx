@@ -1,15 +1,22 @@
 import React, { useMemo, useState } from 'react'
 import clsx from 'clsx'
 import classes from './styles.module.scss'
+import globalClasses from '../../styles.module.scss'
 import Item, { ItemType } from './Item'
 
 type Props = {
   items: ItemType[]
   onChange: (newValue: string) => void
   value: string
+  skeleton: boolean
 }
 
-export default function Select({ items = [], value, onChange }: Props) {
+export default function Select({
+  items = [],
+  value,
+  onChange,
+  skeleton
+}: Props) {
   const [open, setOpen] = useState(false)
 
   const selectedItem = useMemo(() => {
@@ -23,7 +30,10 @@ export default function Select({ items = [], value, onChange }: Props) {
   }
 
   return (
-    <div className={clsx(classes.container, {[classes.open]: open})}>
+    <div className={clsx(classes.container, {
+      [classes.open]: open,
+      [globalClasses.skeleton]: skeleton
+    })}>
       <Item item={selectedItem} onClick={() => setOpen(!open)} />
       {open && (
         <ul>

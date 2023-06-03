@@ -2,27 +2,39 @@ import React from 'react'
 import useSWR from 'swr'
 import Issue from '../../components/Issue'
 import { fetchIssues, GetIssuesParams } from '../../api'
+import { getDummyIssues } from '../../utils/dummyData'
 import classes from './styles.module.scss'
+import EmptyState from './EmptyState'
 
 type Props = {
   member: string
+  onClearFilters: () => void
 }
 
-export default function IssueList({ member }: Props) {
-  const issues = useSWR(['issues', member], async () => {
+export default function IssueList({ member, onClearFilters }: Props) {
+  const { data, isLoading } = useSWR(['issues', member], async () => {
     const params: GetIssuesParams = {}
     if (member) {
       params.assignee = member
     }
     return fetchIssues(params)
   }, {
-    fallbackData: []
+    fallbackData: getDummyIssues(3)
   })
+
+  if (!isLoading && !data.length) {
+    return (
+      <EmptyState
+        member={member}
+        onClearFilters={onClearFilters}
+      />
+    )
+  }
 
   return (
     <div>
       <ul className={classes.issueList}>
-        {issues.data.map(issue => <Issue issue={issue} />)}
+        {data.map(issue => <Issue skeleton={isLoading} issue={issue} />)}
       </ul>
     </div>
   )

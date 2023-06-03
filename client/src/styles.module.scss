@@ -3,3 +3,19 @@
   margin: 0 auto;
   padding: 1rem;
 }
+
+body .skeleton {
+  pointer-events: none;
+
+  a, span {
+    color: transparent;
+    background: #4c5058;
+    border-radius: .3rem;
+    animation: breathe infinite alternate 1s ease-in-out;
+  }
+}
+
+@keyframes breathe {
+  from {opacity: 1;}
+  to {opacity: .5;}
+}

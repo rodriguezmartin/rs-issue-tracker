@@ -14,7 +14,7 @@ function App() {
   return (
     <div className={classes.container}>
       <Filters member={member} onMemberChange={setMember} />
-      <IssueList member={member} />
+      <IssueList member={member} onClearFilters={() => setMember('')} />
     </div>
   )
 }

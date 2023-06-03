@@ -2,12 +2,14 @@ import React from 'react'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import classes from './styles.module.scss'
+import globalClasses from '../../styles.module.scss'
 import { IssueType } from '../../types'
 import Label from '../Label'
 import Link from '../Link'
 
 type Props = {
   issue: IssueType
+  skeleton?: boolean
 }
 
 export default function Issue({
@@ -20,10 +22,14 @@ export default function Issue({
     opener,
     labels,
     overdue
-  }
+  },
+  skeleton
 }: Props) {
   return (
-    <div className={clsx(classes.container, { [classes.overdue]: overdue })}>
+    <div className={clsx(classes.container, {
+      [classes.overdue]: overdue,
+      [globalClasses.skeleton]: skeleton
+    })}>
       <div className={classes.score}>
         <span>{score}</span>
       </div>
@@ -43,9 +49,11 @@ export default function Issue({
           )}
         </p>
         <ul>
-          {labels.map(({ name, color }) => (
-            <Label name={name} color={color} />
-          ))}
+          <li>
+            {labels.map(({ name, color }) => (
+              <Label name={name} color={color} />
+            ))}
+          </li>
         </ul>
       </div>
     </div>
