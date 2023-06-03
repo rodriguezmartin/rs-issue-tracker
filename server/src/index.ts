@@ -1,4 +1,5 @@
 import express, { Express } from 'express'
+import cors from 'cors'
 import 'dotenv/config'
 
 import memberRoutes from './entities/members/routes'
@@ -11,6 +12,8 @@ if (!process.env.ORGANIZATION || !process.env.REPOSITORY) {
 }
 
 const { PORT = 5000 } = process.env
+
+app.use(cors());
 
 app.use('/members', memberRoutes)
 app.use('/issues', issueRoutes)

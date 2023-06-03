@@ -1,8 +1,9 @@
 import { Request, Response } from 'express'
-import { request } from '@octokit/request'
+import request from '../../../utils/requestWithAuth'
 
 import { adaptMember } from '../adapters'
 import sendError from '../../../utils/sendError'
+import { Member } from '../../../types'
 
 const { ORGANIZATION = '' } = process.env
 
@@ -12,7 +13,7 @@ export default async function getMembers(_: Request, res: Response) {
       org: ORGANIZATION,
     })
 
-    const response = data.map(adaptMember)
+    const response: Member[] = data.map(adaptMember)
 
     res.send(response)
   } catch (err) {

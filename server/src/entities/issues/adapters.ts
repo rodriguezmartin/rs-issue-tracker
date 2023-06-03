@@ -1,34 +1,42 @@
-import { Issue, Label } from '../../types'
+import { GHIssue, Issue, GHLabel } from '../../types'
 import { calculateScore } from '../../scoreCalculation'
 
-function adaptLabel(label: Label) {
+const { OVERDUE_THRESHOLD = 100 } = process.env
+
+function adaptLabel(label: GHLabel) {
   if (typeof label === 'string') {
     return {
       name: label
     }
   }
 
-  const { name, color } = label
-
   return {
-    name,
-    color
+    name: label.name || '',
+    color: label.color
   }
 }
 
-export function adaptIssue(issue: Issue) {
-  const { title, url, number, created_at, user, labels } = issue
+export function adaptIssue(issue: GHIssue): Issue {
+  const { title, html_url, number, created_at, user, labels } = issue
 
-  return {
+  const score = calculateScore(issue)
+
+  const adapted: Issue = {
     title,
-    url,
+    url: html_url,
     number,
     createdAt: created_at,
-    opener: {
+    labels: labels.map(adaptLabel),
+    score,
+    overdue: score >= OVERDUE_THRESHOLD
+  }
+
+  if (user) {
+    adapted.opener = {
       username: user?.login,
       url: user?.html_url
-    },
-    labels: labels.map(adaptLabel),
-    score: calculateScore(issue)
+    }
   }
+
+  return adapted
 }

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { Issue } from '../types'
+import { GHIssue } from '../types'
 
 const { LABELS_WEIGHT = '' } = process.env
 
@@ -25,7 +25,7 @@ if (LABELS_WEIGHT) {
   }
 }
 
-export default function calculateScore(issue: Issue) {
+export default function calculateScore(issue: GHIssue) {
   const weight = issue.labels.reduce((accum, label) => {
     const labelId = typeof label !== 'string' && label.id
     if (labelId && weights[labelId] && weights[labelId] > accum) {

@@ -1,9 +1,10 @@
 import { Request, Response } from 'express'
-import { request } from '@octokit/request'
 import { isString } from 'typed-assert'
 
 import { adaptIssue } from '../adapters'
+import request from '../../../utils/requestWithAuth'
 import sendError from '../../../utils/sendError'
+import { Issue } from '../../../types'
 
 const { ORGANIZATION = '', REPOSITORY = '' } = process.env
 
@@ -15,10 +16,11 @@ export default async function getIssues({ query }: Request, res: Response) {
     const { data } = await request('GET /repos/{owner}/{repo}/issues', {
       owner: ORGANIZATION,
       repo: REPOSITORY,
-      assignee: '*',
+      assignee,
     })
 
-    const response = data.map(adaptIssue).sort((a, b) => b.score - a.score)
+    const response: Issue[] = data.map(adaptIssue)
+    response.sort((a, b) => b.score - a.score)
 
     res.send(response)
   } catch (err) {
