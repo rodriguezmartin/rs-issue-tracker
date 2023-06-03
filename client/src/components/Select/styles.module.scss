@@ -1,0 +1,74 @@
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 250px;
+  user-select: none;
+  cursor: pointer;
+  z-index: 1;
+
+  & > div {
+    background: #323539;
+    border-radius: .5rem;
+    border: 1px solid #51565f;
+    box-shadow: 0px 3px 7px 1px #0000001f;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 1.15rem;
+      right: .8rem;
+      border: .3rem solid transparent;
+      border-top-color: #dcdcdc;
+      border-bottom-width: 0;
+    }
+  }
+
+  &.open > div::after {
+    transform: rotateX(180deg);
+  }
+
+  ul {
+    position: absolute;
+    top: calc(100% - .5rem);
+    width: 100%;
+    padding: .8rem 0 .3rem;
+    margin: 0;
+    background: #323539;
+    border-radius: 0 0 .5rem .5rem;
+    border: 1px solid #51565f;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 10px #00000063;
+    list-style: none;
+    overflow: hidden;
+    z-index: -1;
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  padding: .5rem .7rem;
+
+  &:hover {
+    background: #42454c;
+  }
+
+  span {
+    display: inline-block;
+    flex-shrink: 1;
+    padding: .1rem .2rem;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  img {
+    width: 1.2rem;
+    flex-shrink: 0;
+    margin-right: .5rem;
+    border-radius: 50%;
+    border: 1px solid #d9d9d9;
+    overflow: hidden;
+  }
+}
