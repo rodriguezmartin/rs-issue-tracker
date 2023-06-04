@@ -1,7 +1,7 @@
 import { GHIssue, Issue, GHLabel } from '../../types'
 import { calculateScore } from '../../scoreCalculation'
 
-const { OVERDUE_THRESHOLD = 100 } = process.env
+const { OVERDUE_THRESHOLD = '100' } = process.env
 
 function adaptLabel(label: GHLabel) {
   if (typeof label === 'string') {
@@ -28,7 +28,7 @@ export function adaptIssue(issue: GHIssue): Issue {
     createdAt: created_at,
     labels: labels.map(adaptLabel),
     score,
-    overdue: score >= OVERDUE_THRESHOLD
+    overdue: score >= Number(OVERDUE_THRESHOLD)
   }
 
   if (user) {

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import fontColorContrast from 'font-color-contrast'
 import classes from './styles.module.scss'
 import { LabelType } from '../../types'

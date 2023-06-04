@@ -20,8 +20,8 @@ const { PORT = 5000 } = process.env
 
 app.use(cors());
 
-app.use('/members', memberRoutes)
-app.use('/issues', issueRoutes)
+app.use('/api/members', memberRoutes)
+app.use('/api/issues', issueRoutes)
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`)
