@@ -44,7 +44,9 @@ export default function Issue({
           {opener && (
             <span className={classes.opener}>
               opened {dayjs(createdAt).fromNow()} by
-              <Link href={opener.username}>{opener.username}</Link>
+              <Link href={`https://github.com/${opener.username}`}>
+                {opener.username}
+              </Link>
             </span>
           )}
         </p>
