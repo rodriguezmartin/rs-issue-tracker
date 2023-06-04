@@ -12,14 +12,14 @@ type Props = {
 }
 
 export default function IssueList({ member, onClearFilters }: Props) {
-  const { data, isLoading } = useSWR(['issues', member], async () => {
+  const { data, isLoading, error } = useSWR(['issues', member], async () => {
     const params: GetIssuesParams = {}
     if (member) {
       params.assignee = member
     }
     return fetchIssues(params)
   }, {
-    fallbackData: getDummyIssues(3)
+    fallbackData: getDummyIssues(5)
   })
 
   if (!isLoading && !data.length) {
@@ -34,7 +34,7 @@ export default function IssueList({ member, onClearFilters }: Props) {
   return (
     <div>
       <ul className={classes.issueList}>
-        {data.map(issue => <Issue skeleton={isLoading} issue={issue} />)}
+        {data.map(issue => <Issue skeleton={isLoading || error} issue={issue} />)}
       </ul>
     </div>
   )

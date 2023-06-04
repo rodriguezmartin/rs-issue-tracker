@@ -11,7 +11,7 @@ type Props = {
 }
 
 export default function Filters({ member, onMemberChange }: Props) {
-  const { data, isLoading } = useSWR('members', async () => {
+  const { data, isLoading, error } = useSWR('members', async () => {
     const data = await fetchMembers()
     const options: ItemType[] = [
       { value: '', label: 'All' },
@@ -29,7 +29,7 @@ export default function Filters({ member, onMemberChange }: Props) {
     <div className={classes.container}>
       <p>Show issues assigned to:</p>
       <Select
-        skeleton={isLoading}
+        skeleton={isLoading || error}
         items={data}
         value={member}
         onChange={onMemberChange} />
