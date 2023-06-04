@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useRef } from 'react'
+import { useClickAway } from 'react-use'
 import clsx from 'clsx'
 import classes from './styles.module.scss'
 import globalClasses from '../../styles.module.scss'
@@ -18,6 +19,8 @@ export default function Select({
   skeleton
 }: Props) {
   const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  useClickAway(ref, () => setOpen(false))
 
   const selectedItem = useMemo(() => {
     const item = items.find(item => value === item.value)
@@ -30,7 +33,7 @@ export default function Select({
   }
 
   return (
-    <div className={clsx(classes.container, {
+    <div ref={ref} className={clsx(classes.container, {
       [classes.open]: open,
       [globalClasses.skeleton]: skeleton
     })}>

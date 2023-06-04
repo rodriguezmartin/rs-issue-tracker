@@ -31,6 +31,7 @@
     position: absolute;
     top: calc(100% - .5rem);
     width: 100%;
+    max-height: 20rem;
     padding: .8rem 0 .3rem;
     margin: 0;
     background: #323539;
@@ -39,7 +40,7 @@
     box-sizing: border-box;
     box-shadow: 0px 4px 10px #00000063;
     list-style: none;
-    overflow: hidden;
+    overflow: auto;
     z-index: -1;
   }
 }
